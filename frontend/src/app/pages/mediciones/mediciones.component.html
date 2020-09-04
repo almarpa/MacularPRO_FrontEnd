@@ -1,0 +1,181 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+
+                <div class="card-body">
+
+                    <h4 class="card-title">Seleccione un ojo</h4>
+                    <br>
+                    <select [(ngModel)]="ojo_seleccionado" (change)="cargarMedicionesDelOjo();activarFormulario()" name="ojo" type="text" class="form-control" required>
+                        <option [ngValue]="ojo" *ngFor="let ojo of ojos"> {{ojo.ojo_revision}} </option>
+                    </select>
+                </div>
+
+                <div class="text-left">
+                    <button type="button" (click)="activarFormularioListado()" class="btn waves-effect waves-light m-r-10 ">
+                        <i [hidden]="!controlList" class="fa fa-sort-down"></i>
+                        <i [hidden]="controlList" class="fa fa-sort-up"></i>
+                    </button>
+                </div>
+
+                <div class="text-right">
+                    <button *ngIf="rol == 'ADMIN'" type="button" (click)="activarFormularioCreacion()" class="btn waves-effect waves-light m-r-10 btn-success">
+                        <i class="fa fa-plus"> </i> Nueva medición
+                    </button>
+                </div>
+    
+                <table class="table table-hover" [hidden]="!controlList">
+                    <thead>
+                        <tr>
+                            <th>Nº</th>
+                            <th style="display:none;">ID</th>
+                            <th>Fecha</th>
+                            <th>Agudeza visual</th>
+                            <th>Percepción de luz</th>
+                            <th>Movimiento de manos</th>
+                            <th>Cuenta dedos</th>
+                        </tr>
+                    </thead>
+    
+                    <tbody>
+                        <tr *ngFor="let medicion of mediciones; let i = index">
+                            <td> {{ i+1 }} </td>
+                            <td style="display:none;"> {{ medicion.id}}</td>
+                            <td> {{ medicion.fecha_creacion | date:'yyyy/MM/dd'}} </td>
+                            <td> {{ medicion.agudeza_visual }} </td>
+                            <td> {{ medicion.per_luz  ? 'SÍ' : 'NO'}} </td>
+                            <td> {{ medicion.mov_manos ? 'SÍ' : 'NO'}} </td>
+                            <td> {{ medicion.cont_dedos ? 'SÍ' : 'NO'}} </td>
+                            <button *ngIf="rol == 'ADMIN'" class="btn btn-info m-r-10" (click)="activarFormularioEdicion();cargarMedicion(medicion.id,i+1)">
+                                <i class="fa fa-pencil" ></i>
+                            </button>
+                        </tr>
+                    </tbody>
+    
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row" [hidden]="!controlNuevaMedicion">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-body">
+                
+                <h4>Datos de la nueva medición</h4>
+
+                <form [formGroup]="formulario" (ngSubmit)="crearMedicion( formulario.value )" class="form p-t-20">
+        
+                    <div class="col-9">
+                        <div class="form-group">
+                            <label>Agudeza visual</label>
+                            <div class="range-control input-group">
+                                <span>0</span>
+                                <input oninput="showVal1(this.value)" onchange="showVal1(this.value)" formControlName="agudeza_visual" name="agudeza_visual" type="range" class="slider" min="0.05" max="1" value="0" step="0.05" required>
+                                <span id="valBox1"></span>
+                            </div>                        
+                        </div>
+                        <div class="form-group">
+                            <label>Percepción de luz</label>
+                            <div class="input-group">
+                                <select formControlName="per_luz" name="per_luz" class="form-control">
+                                    <option value="1">SÍ</option>
+                                    <option value="0">NO</option>
+                                </select>                        
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Movimiento de manos</label>
+                            <div class="input-group">
+                                <select formControlName="mov_manos" name="mov_manos" class="form-control">
+                                    <option value="1">SÍ</option>
+                                    <option value="0">NO</option>
+                                </select>                        
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Cuenta dedos</label>
+                            <div class="input-group">
+                                <select formControlName="cont_dedos" name="cont_dedos" class="form-control">
+                                    <option value="1">SÍ</option>
+                                    <option value="0">NO</option>
+                                </select>                        
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-right">
+                        <button type="submit" class="btn btn-success waves-effect waves-light m-r-10"> Crear medición </button>
+                    </div>
+
+                </form>
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+
+                     
+<div class="row" [hidden]=!controlEdicion>
+    <div class="col-9" >
+        <div class="card">
+            <div class="card-body">
+                <h4> Editar medición {{ numMedicion }}</h4>
+
+                <form ngNativeValidate #f="ngForm" (ngSubmit)="editarMedicion( f.value )" class="form p-t-20">
+
+                    <div style="display:none;" class="form-group">
+                        <label>ID</label>
+                        <div class="input-group">
+                            <input [ngModel]="medicion.id" name="id" type="text" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Agudeza_visual</label>
+                        <div class="input-group">
+                            <span>0</span>
+                            <input oninput="showVal5(this.value)" onchange="showVal5(this.value)" [ngModel]="medicion.agudeza_visual" name="agudeza_visual" type="range" class="slider" min="0" max="1" value="0" step="0.1">
+                            <span id="valBox5"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Percepción de luz</label>
+                        <div class="input-group">
+                            <select [ngModel]="medicion.per_luz" name="per_luz" type="text" class="form-control" required >
+                                    <option value="1">SÍ</option>
+                                    <option value="0">NO</option>
+                            </select> 
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Movimiento de manos</label>
+                        <div class="input-group">
+                            <select [ngModel]="medicion.mov_manos" name="mov_manos" type="text" class="form-control" required >
+                                    <option value="1">SÍ</option>
+                                    <option value="0">NO</option>
+                            </select> 
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Cuenta dedos</label>
+                        <div class="input-group">
+                            <select [ngModel]="medicion.cont_dedos" name="cont_dedos" type="text" class="form-control" required >
+                                    <option value="1">SÍ</option>
+                                    <option value="0">NO</option>
+                            </select> 
+                        </div>
+                    </div>
+                                   
+                    <div class="text-right">
+                        <button type="submit" class="btn btn-success waves-effect waves-light m-r-10"> Guardar </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

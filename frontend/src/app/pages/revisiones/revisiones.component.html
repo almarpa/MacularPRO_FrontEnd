@@ -1,0 +1,98 @@
+<div class="row fadeIn">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                   
+                <div class="text-left">
+                    <button type="button" (click)="activarFormulario2()" class="btn waves-effect waves-light m-r-10 ">
+                        <i [hidden]="controlList" class="fa fa-sort-down"></i>
+                        <i [hidden]="!controlList" class="fa fa-sort-up"></i>
+                    </button>
+                </div>
+                <div class="text-right" *ngIf="rol == 'ADMIN'">
+                    <button type="button" (click)="activarFormulario()" class="btn waves-effect waves-light m-r-10 btn-success">
+                        <i class="fa fa-plus"> </i> Nueva revisión
+                    </button>
+                </div>
+
+                <table class="table table-hover" [hidden]="controlList">
+                    <thead>
+                        <tr>
+                            <th>Nº</th>
+                            <th>Fecha revisión</th>
+                            <th>Médico que la realiza</th>
+                            <th>Coste total</th>
+                            <th>Coste acumulado</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr *ngFor="let revision of revisiones; let i = index" class="pointer">
+                            <td [routerLink]="[revision.id]"> {{i+1}} </td>
+                            <td [routerLink]="[revision.id]"> {{ revision.fecha_revision | date:'yyyy/MM/dd' }} </td>
+                            <td [routerLink]="[revision.id]"> {{ revision.Medico.apellidos }}, {{ revision.Medico.nombre }}</td>
+                            <td [routerLink]="[revision.id]"> {{ revision.coste_total }} </td>
+                            <td [routerLink]="[revision.id]"> {{ revision.coste_acum }} </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" [hidden]="!control">
+    <div class="col-9">
+        <div class="card">
+            <div class="card-body">
+                
+                <h4>Datos de la nueva revisión</h4>
+
+                <form [formGroup]="formulario" (ngSubmit)="crearRevision( formulario.value )" class="form p-t-20">
+        
+                    <div class="form-group">
+                        <label for="exampleInputuname">Ojo revisado</label>
+                        <div class="input-group">
+                            <select formControlName="ojo" name="ojo" required class="form-control">
+                                <option>IZQUIERDO</option>
+                                <option>DERECHO</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputuname">Motivo</label>
+                        <div class="input-group">
+                            <textarea formControlName="motivo" name="motivo" cols="40" rows="5" type="text" class="form-control" required></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputuname">Observaciones</label>
+                        <div class="input-group">
+                            <textarea formControlName="observ" name="observ" cols="40" rows="5" type="text" class="form-control" required></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputuname">Medicamentos</label>
+                        <div class="input-group">
+                            <select formControlName="medicamentos" name="medicamentos" multiple class="form-control">
+                                <option value="Ranibizumab">Ranibizumab-Lucentis (500€)</option>
+                                <option value="Bevacizumab" >Bevacizumab-Avastin (500€)</option>
+                                <option value="Aflibercept">Aflibercept-Eylea (500€)</option>
+                                <option value="Dexametasona">Dexametasona (1000€)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="text-right">
+                        <button type="submit" class="btn btn-success waves-effect waves-light m-r-10"> Crear revisión </button>
+                    </div>
+
+                </form>
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+

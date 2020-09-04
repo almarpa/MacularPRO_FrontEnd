@@ -1,0 +1,168 @@
+<div class="row fadeIn">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                    
+                <div class="text-right">
+                    <button type="button" (click)="activarFormulario()" class="btn waves-effect waves-light m-r-10 btn-success">
+                        <i class="fa fa-plus"> </i> Nuevo dato
+                    </button>
+                </div>
+
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nº</th>
+                            <th>Fecha de creación</th>
+                            <th>Obesidad</th>
+                            <th>Peso (Kg)</th>
+                            <th>Altura (cm)</th>
+                            <th>Perímetro abdominal</th>
+                            <th>IMC</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr *ngFor="let dato of datos; let i = index" >
+                            <td> {{i+1}} </td>
+                            <td>{{dato.fecha_creacion | date:'yyyy/MM/dd'}}</td>
+                            <td>{{dato.obesidad}}</td>
+                            <td>{{dato.peso }}</td>
+                            <td>{{dato.altura }}</td>
+                            <td>{{dato.perim_abdominal }}</td>
+                            <td>{{dato.imc }}</td>
+
+                            <td>
+                                <button class="btn btn-info m-r-10" style="margin:5px;" (click)="activarFormulario2();cargarDato(dato.id,i+1)">
+                                    <i class="fa fa-pencil"></i>
+                                </button>
+                                <button class="btn btn-danger m-r-10" style="margin:5px;" (click)="borrarDato(dato)">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" [hidden]="!control">
+    <div class="col-9">
+        <div class="card">
+            <div class="card-body">
+                
+                <h4>Datos del nuevo dato médico</h4>
+
+                <form [formGroup]="formulario" (ngSubmit)="anadirDato( formulario.value )" class="form p-t-20">
+        
+                    <div class="form-group">
+                        <label for="exampleInputuname">Obesidad</label>
+                        <div class="input-group">
+                            <select formControlName="obesidad" name="obesidad" class="form-control">
+                                <option >No</option>
+                                <option >Leve</option>
+                                <option >Moderada</option>
+                                <option >Grave</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputuname">Peso (Kg)</label>
+                        <div class="input-group">
+                            <input formControlName="peso" name="peso" type="number" step="any" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputuname">Altura (cm)</label>
+                        <div class="input-group">
+                            <div class="input-group">
+                                <input formControlName="altura" name="altura" type="number" class="form-control" required>
+                            </div>                       
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputuname">Perímetro abdominal</label>
+                        <div class="input-group">
+                            <div class="input-group">
+                                <input formControlName="perim_abdominal" name="perim_abdominal" type="number" step="any" class="form-control" required>
+                            </div>                       
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputuname">Índice de masa corporal (IMC)</label>
+                        <div class="input-group">
+                            <div class="input-group">
+                                <input formControlName="imc" name="imc" type="number" step="any" class="form-control" required>
+                            </div>                       
+                        </div>
+                    </div>
+
+                    <div class="text-right">
+                        <button type="submit" class="btn btn-success waves-effect waves-light m-r-10"> Añadir </button>
+                    </div>
+
+                </form>
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row" [hidden]=!control2>
+    <div class="col-9" >
+        <div class="card">
+            <div class="card-body">
+                <h4>Editar dato médico {{numeroCol}}</h4>
+
+                <form ngNativeValidate #f="ngForm" (ngSubmit)="editarDato( f.value )" class="form p-t-20">
+                    <div class="form-group">
+                        <label>Obesidad</label>
+                        <div class="input-group">
+                            <select [ngModel]="dato.obesidad" name="obesidad" type="text" class="form-control" required>
+                                <option >No</option>
+                                <option >Leve</option>
+                                <option >Moderada</option>
+                                <option >Grave</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Peso (Kg)</label>
+                        <div class="input-group">
+                            <input [ngModel]="dato.peso" name="peso" step="any" type="number" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Altura (cm)</label>
+                        <div class="input-group">
+                            <input [ngModel]="dato.altura" name="altura" type="number" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Perímetro abdominal</label>
+                        <div class="input-group">
+                            <input [ngModel]="dato.perim_abdominal" name="perim_abdominal" type="number" step="any" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Índice de masa corporal (IMC)</label>
+                        <div class="input-group">
+                            <input [ngModel]="dato.imc" name="imc" type="number" step="any" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="text-right">
+                        <button type="submit" class="btn btn-success waves-effect waves-light m-r-10"> Guardar </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

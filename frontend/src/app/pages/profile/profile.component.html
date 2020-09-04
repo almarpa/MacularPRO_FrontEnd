@@ -1,0 +1,74 @@
+<div class="row">
+
+    <div class="col-lg-7">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Perfil del usuario</h4>
+
+                <form ngNativeValidate #f="ngForm" (ngSubmit)="guardar( f.value )" class="form p-t-20">
+                    <div class="form-group">
+                        <label for="exampleInputuname">Nombre</label>
+                        <div class="input-group">
+                            <input [ngModel]="usuario.nombre" name="nombre" type="text" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputuname">Apellidos</label>
+                        <div class="input-group">
+                            <input [ngModel]="usuario.apellidos" name="apellidos" type="text" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Correo electrónico</label>
+                        <div class="input-group">
+                            <input [ngModel]="usuario.correo" name="correo" type="email" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Sexo</label>
+                        <div class="input-group">
+                            <select [ngModel]="usuario.sexo" name="sexo" type="text" class="form-control" required>
+                                <option> Masculino </option>
+                                <option> Femenino </option>
+                                <option> Indefinido </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Teléfono</label>
+                        <div class="input-group">
+                            <input [ngModel]="usuario.telefono" name="telefono" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Servicio unidad</label>
+                        <div class="input-group">
+                            <input [ngModel]="usuario.servicio_unidad" name="servicio_unidad" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Número de colegiado</label>
+                        <div class="input-group">
+                            <input [ngModel]="usuario.num_colegiado" name="num_colegiado" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Centro hospitalario</label>
+                        <div class="input-group">
+                            <input [ngModel]="usuario.centro" name="centro" type="text" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Permisos</label>
+                        <div class="input-group">
+                            <input [ngModel]="usuario.rol" name="rol" type="text" class="form-control" readonly>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-success waves-effect waves-light m-r-10"> Guardar </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,236 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+
+                <div class="card-body">
+                    <h4 class="card-title">Seleccione un ojo</h4>
+                    <br>
+                    <select [(ngModel)]="ojo_seleccionado" (change)="cargarEscaneresDelOjo();activarFormulario()" name="ojo" type="text" class="form-control" required>
+                        <option [ngValue]="ojo" *ngFor="let ojo of ojos"> {{ojo.ojo_revision}} </option>
+                    </select>
+                </div>    
+
+                <div class="text-left">
+                    <button type="button" (click)="activarFormularioListado()" class="btn waves-effect waves-light m-r-10 ">
+                        <i [hidden]="!controlList" class="fa fa-sort-down"></i>
+                        <i [hidden]="controlList" class="fa fa-sort-up"></i>
+                    </button>
+                </div>
+
+                <div class="text-right" *ngIf="rol == 'ADMIN'">
+                    <button type="button" (click)="activarFormularioCreacion()" class="btn waves-effect waves-light m-r-10 btn-success">
+                        <i class="fa fa-plus"> </i> Nuevo escáner de retina
+                    </button>
+                </div>
+    
+                <table class="table table-hover" [hidden]="!controlList">
+                    <thead>
+                        <tr>
+                            <th>Nº</th>
+                            <th style="display:none;">ID</th>
+                            <th>Fecha</th>
+                            <th>Edema macular quístico</th>
+                            <th>Grosor retina (micras)</th>
+                            <th>Puntos reflectantes</th>
+                            <th>Líquido subretiniano</th>
+                            <th>Afectación capa interna</th>
+                            <th>Afectación capa externa</th>
+                            <th>Tipo membrana neovascular</th>
+                        </tr>
+                    </thead>
+    
+                    <tbody>
+                        <tr *ngFor="let escaner of escaneres; let i = index">
+                            <td> {{ i+1 }} </td>
+                            <td style="display:none;"> {{ escaner.id}}</td>
+                            <td> {{ escaner.fecha_creacion | date:'yyyy/MM/dd' }}</td>
+                            <td> {{ escaner.edema_mac_quis ? 'Sí':'No' }} </td>
+                            <td> {{ escaner.grosor_retina  }} </td>
+                            <td> {{ escaner.puntos_reflectantes ? 'Sí':'No' }} </td>
+                            <td> {{ escaner.liquido_subrret ? 'Sí':'No' }} </td>
+                            <td> {{ escaner.afectacion_capa_int ? 'Sí':'No' }} </td>
+                            <td> {{ escaner.afectacion_capa_ext ? 'Sí':'No' }} </td>
+                            <td> {{ escaner.tipo_memb_neov }} </td>
+                            <button *ngIf="rol == 'ADMIN'" class="btn btn-info m-r-10" (click)="activarFormularioEdicion();cargarEscaner(escaner.id,i+1)">
+                                <i class="fa fa-pencil"></i>
+                            </button>
+                        </tr>
+                    </tbody>
+    
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row" [hidden]="!controlNuevoEscaner">
+    <div class="col-9">
+        <div class="card">
+            <div class="card-body">
+                
+                <h4>Datos del nuevo escáner de retina</h4>
+
+                <form [formGroup]="formulario" (ngSubmit)="crearEscaner( formulario.value )" class="form p-t-20">
+        
+                    <div class="form-group">
+                        <label>Edema macular quístico</label>
+                        <div class="input-group">
+                            <select formControlName="edema_mac_quis" name="edema_mac_quis" required class="form-control">
+                                <option value="true">SÍ</option>
+                                <option value="false">NO</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Grosor retina (micras)</label>
+                        <div class="input-group">
+                            <input formControlName="grosor_retina" name="grosor_retina" type="number" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Puntos reflectantes</label>
+                        <div class="input-group">
+                            <select formControlName="puntos_reflectantes" name="puntos_reflectantes" required class="form-control">
+                                <option value="true">SÍ</option>
+                                <option value="false">NO</option>
+                            </select>                        
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Líquido subrretiniano</label>
+                        <div class="input-group">
+                            <select formControlName="liquido_subrret" name="liquido_subrret" required class="form-control">
+                                <option value="true">SÍ</option>
+                                <option value="false">NO</option>
+                            </select>                        
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Afectación capa interna</label>
+                        <div class="input-group">
+                            <select formControlName="afectacion_capa_int" name="afectacion_capa_ext" required class="form-control">
+                                <option value="true">SÍ</option>
+                                <option value="false">NO</option>
+                            </select>                        
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Afectación capa externa</label>
+                        <div class="input-group">
+                            <select formControlName="afectacion_capa_ext" name="afectacion_capa_ext" required class="form-control">
+                                <option value="true">SÍ</option>
+                                <option value="false">NO</option>
+                            </select>                        
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo membrana neovascular</label>
+                        <div class="input-group">
+                            <select formControlName="tipo_memb_neov" name="tipo_memb_neov" required class="form-control">
+                                <option>TIPO 1</option>
+                                <option>TIPO 2</option>
+                                <option>TIPO 3</option>
+                            </select>                        
+                        </div>
+                    </div>
+
+                    <div class="text-right">
+                        <button type="submit" class="btn btn-success waves-effect waves-light m-r-10"> Crear escáner </button>
+                    </div>
+
+                </form>
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+
+                     
+<div class="row" [hidden]=!controlEdicion>
+    <div class="col-9" >
+        <div class="card">
+            <div class="card-body">
+                <h4> Editar escáner de retina {{ numEscaner }}</h4>
+
+                <form ngNativeValidate #f="ngForm" (ngSubmit)="editarEscaner( f.value )" class="form p-t-20">
+
+                    <div style="display:none;" class="form-group">
+                        <label>ID</label>
+                        <div class="input-group">
+                            <input [ngModel]="escaner.id" name="id" required class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Edema macular quístico</label>
+                        <div class="input-group">
+                            <select [ngModel]="escaner.edema_mac_quis" name="edema_mac_quis" required class="form-control">
+                                <option [ngValue]="true">SÍ</option>
+                                <option [ngValue]="false">NO</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Grosor retina</label>
+                        <div class="input-group">
+                            <input [ngModel]="escaner.grosor_retina" name="grosor_retina" type="number" step="0.01" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Puntos reflectantes</label>
+                        <div class="input-group">
+                            <select [ngModel]="escaner.puntos_reflectantes" name="puntos_reflectantes" required class="form-control">
+                                <option [ngValue]="true">SÍ</option>
+                                <option [ngValue]="false">NO</option>
+                            </select>                        
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Líquido subrretiniano</label>
+                        <div class="input-group">
+                            <select [ngModel]="escaner.liquido_subrret" name="liquido_subrret" required class="form-control">
+                                <option [ngValue]="true">SÍ</option>
+                                <option [ngValue]="false">NO</option>
+                            </select>                         
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Afectación capa interna</label>
+                        <div class="input-group">
+                            <select [ngModel]="escaner.afectacion_capa_int" name="afectacion_capa_int" required class="form-control">
+                                <option [ngValue]="true">SÍ</option>
+                                <option [ngValue]="false">NO</option>
+                            </select>                        
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Afectación capa externa</label>
+                        <div class="input-group">
+                            <select [ngModel]="escaner.afectacion_capa_ext" name="afectacion_capa_ext" required class="form-control">
+                                <option [ngValue]="true">SÍ</option>
+                                <option [ngValue]="false">NO</option>
+                            </select>                        
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo membrana neovascular</label>
+                        <div class="input-group">
+                            <select [ngModel]="escaner.tipo_memb_neov" name="tipo_memb_neov" required class="form-control">
+                                <option>TIPO 1</option>
+                                <option>TIPO 2</option>
+                                <option>TIPO 3</option>
+                            </select>                        
+                        </div>
+                    </div>
+                
+                    <div class="text-right">
+                        <button type="submit" class="btn btn-success waves-effect waves-light m-r-10"> Guardar </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

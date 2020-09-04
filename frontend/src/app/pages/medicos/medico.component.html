@@ -1,0 +1,48 @@
+<div class="row fadeIn">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                    
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellidos</th>
+                            <th>Correo electrónico</th>
+                            <th>Teléfono</th>
+                            <th>Sexo</th>
+                            <th>Servicio Unidad</th>
+                            <th>Nº de colegiado</th>
+                            <th>Centro hospitalario</th>
+                            <th>Permisos</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>{{medico.nombre}}</td>
+                            <td>{{medico.apellidos}}</td>
+                            <td>{{medico.correo}}</td>
+                            <td>{{medico.telefono}}</td>
+                            <td>{{medico.sexo}}</td>
+                            <td>{{medico.servicio_unidad}}</td>
+                            <td>{{medico.num_colegiado}}</td>
+                            <td>{{medico.centro}}</td>
+                            <td>{{medico.rol}}</td>
+                            <!-- Nos aseguramos de que el médico logueado no pueda inhabilitarse a sí mismo -->
+                            <td *ngIf="correoLogin != medico.correo && rol==='ADMIN'">
+                                <button class="btn btn-danger m-r-10" (click)="darMedicoDeBaja(medico)">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </td>                        
+                        </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+

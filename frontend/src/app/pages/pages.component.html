@@ -1,0 +1,39 @@
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper">
+
+  <app-header></app-header>
+  <app-sidebar></app-sidebar>
+  
+  <!-- Page Wrapper -->
+  <div class="page-wrapper">
+      <div class="container-fluid">
+
+        <!-- Breadcrumbs -->
+        <div class="container -fluid">
+            <app-breadcrumbs></app-breadcrumbs>
+        </div>
+        
+        <!-- Page Content -->
+        
+        <router-outlet></router-outlet>
+        
+        <!-- <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        This is some text within a card block.
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+        <!-- End Page Content -->
+      </div>
+  </div>
+  <!-- End Page Wrapper -->
+
+
+</div>
+

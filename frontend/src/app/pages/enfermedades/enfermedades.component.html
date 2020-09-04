@@ -1,0 +1,140 @@
+<div class="row fadeIn">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                    
+                <div class="text-right">
+                    <button type="button" (click)="activarFormulario()" class="btn waves-effect waves-light m-r-10 btn-success">
+                        <i class="fa fa-plus"> </i> Nueva enfermedad
+                    </button>
+                </div>
+
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nº</th>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Fecha</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr *ngFor="let enfermedad of enfermedades; let i = index" >
+                            <td> {{i+1}} </td>
+                            <td>{{enfermedad.nombre}}</td>
+                            <td>{{enfermedad.descripcion}}</td>
+                            <td>{{enfermedad.fecha | date:'yyyy/MM/dd'}}</td>
+                            <td>
+                                <button class="btn btn-info m-r-10" style="margin:5px;" (click)="activarFormulario2();cargarEnfermedad(enfermedad.id,i+1)">
+                                    <i class="fa fa-pencil"></i>
+                                </button>
+                                <button class="btn btn-danger m-r-10" style="margin:5px;" (click)="borrarEnfermedad(enfermedad)">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" [hidden]="!control">
+    <div class="col-9">
+        <div class="card">
+            <div class="card-body">
+                
+                <h4>Datos del nuevo enfermedad médico</h4>
+
+                <form [formGroup]="formulario" (ngSubmit)="anadirEnfermedad( formulario.value )" class="form p-t-20">
+        
+                    <div class="form-group">
+                        <label for="exampleInputuname">Nombre</label>
+                        <div class="input-group">
+                            <select formControlName="nombre" name="nombre" class="form-control">
+                                <option>Degeneración macular asociada a la edad (DMAE)</option>
+                                <option>Edema macular diabético</option>
+                                <option>Obstrucción de vena central de la retina</option>
+                                <option>Obstrucción de rama venosa retiniana</option>
+                                <option>Vasculopatía Polipoidea</option>
+                                <option>Telangiectasias</option>
+                                <option>Uveitis</option>
+                                <option>Otras</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputuname">Descripción</label>
+                        <div class="input-group">
+                            <textarea formControlName="descripcion" name="descripcion" type="text" cols="40" rows="5" class="form-control" required></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputuname">Fecha</label>
+                        <div class="input-group">
+                            <div class="input-group">
+                                <input formControlName="fecha" name="fecha" type="date" class="form-control" required>
+                            </div>                       
+                        </div>
+                    </div>
+
+                    <div class="text-right">
+                        <button type="submit" class="btn btn-success waves-effect waves-light m-r-10"> Añadir </button>
+                    </div>
+
+                </form>
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row" [hidden]=!control2>
+    <div class="col-9" >
+        <div class="card">
+            <div class="card-body">
+                <h4>Editar enfermedad médico {{ numeroCol }}</h4>
+
+                <form ngNativeValidate #f="ngForm" (ngSubmit)="editarEnfermedad( f.value )" class="form p-t-20">
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <div class="input-group">
+                            <select [ngModel]="enfermedad.nombre" name="nombre" type="text" class="form-control" required>
+                                <option >Degeneración macular asociada a la edad (DMAE)</option>
+                                <option >Edema macular diabético</option>
+                                <option >Obstrucción de vena central de la retina</option>
+                                <option >Obstrucción de rama venosa retiniana</option>
+                                <option >Vasculopatía Polipoidea</option>
+                                <option >Telangiectasias</option>
+                                <option >Uveitis</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Descripción</label>
+                        <div class="input-group">
+                            <textarea [ngModel]="enfermedad.descripcion" name="descripcion" type="text" cols="40" rows="5" class="form-control" required></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Resultado</label>
+                        <div class="input-group">
+                            <input [ngModel]="enfermedad.fecha" name="fecha" type="date" class="form-control" required>
+                        </div>
+                    </div>
+                    
+                    <div class="text-right">
+                        <button type="submit" class="btn btn-success waves-effect waves-light m-r-10"> Guardar </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

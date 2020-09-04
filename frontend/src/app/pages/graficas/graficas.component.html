@@ -1,0 +1,49 @@
+<!-- Rounded switch -->
+<div style="display: flex">
+    <h4 style="margin-right: 7px;">Evolución</h4>
+    <label class="switch" style="margin-right: 7px;">
+      <input type="checkbox" [(ngModel)]="checked" (change)="cambiarGrafica()">
+      <span class="slide"></span>
+    </label>
+    <h4>Costes</h4>
+</div>
+
+<!-- Gráfica de evolución -->
+<div class="flex">
+    <div class="flex-item"> 
+      <div style="display: block;">
+        <canvas baseChart style="position: relative" height="20vh" width="50vh" 
+                [datasets]="lineChartData"
+                [labels]="lineChartLabels"
+                [options]="lineChartOptions"
+                [colors]="lineChartColors"
+                [legend]="lineChartLegend"
+                [chartType]="lineChartType"
+                [plugins]="lineChartPlugins"
+                (chartClick)="chartClicked($event)"> 
+                <!-- (chartHover)="chartHovered($event)"-->
+
+        </canvas>
+        <div class="text-right" style="margin: 5px 40px 0px 0px;" [hidden]="!checked">
+          <h4>Coste acumulado: <i>{{coste_acum}} (€)</i> </h4>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="flex-item" [hidden]="checked">
+      <br>
+      <h4>Agudeza visual del paciente</h4>
+      <table class="table table-responsive table-condensed">
+        <tr>
+          <th>Ojo revisado</th>
+          <th *ngFor="let dat of lineChartLabels">{{dat}}</th>
+        </tr>
+        <tr *ngFor="let d of tableData; let i=index" [class]="'line-'+i">
+          <td> {{ojos[i]}} </td>
+          <td *ngFor="let fecha of lineChartLabels; let j=index">{{d && d.data[j]}}</td>
+        </tr>
+      </table>
+    </div> -->
+
+</div>
+  

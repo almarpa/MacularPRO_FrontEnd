@@ -1,0 +1,134 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+
+                <h4 class="card-title">Búsqueda de pacientes</h4>
+                <br>
+                <input #input (keyup)="buscarPacientes(input.value)" type="text" class="form-control" placeholder="SIP o nombre del paciente">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row fadeIn">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                
+                <div class="text-right" *ngIf="rol==='ADMIN'">
+                    <i [routerLink]="['/pacientes-inhabilitados']" class="pointer underline"> Pacientes Inhabilitados </i>
+                </div>
+
+                <div class="text-left">
+                    <button type="button" (click)="activarFormulario2()" class="btn waves-effect waves-light m-r-10">
+                        <i [hidden]="controlList" class="fa fa-sort-down"></i>
+                        <i [hidden]="!controlList" class="fa fa-sort-up"></i>
+                    </button>
+                </div>
+
+                <div class="text-right">
+                    <button type="button" (click)="activarFormulario()" class="btn btn-success waves-effect waves-light m-r-10">
+                        <i class="fa fa-plus"> </i> Nuevo paciente
+                    </button>
+                </div>
+
+                <table class="table table-hover" [hidden]="controlList">
+                    <thead>
+                        <h4 *ngIf="rol == 'ADMIN'">Listado de pacientes al cargo</h4>
+                        <h4 *ngIf="rol == 'COLABORADOR'">Listado de pacientes registrados</h4>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellidos</th>
+                            <th>SIP</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr *ngFor="let paciente of pacientes" [routerLink]="['/pacientes', paciente.id]" class="pointer">
+                            <td>{{paciente.nombre}}</td>
+                            <td>{{paciente.apellidos}}</td>
+                            <td>{{paciente.sip}}</td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row" [hidden]="!control">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                
+                <h4>Datos del nuevo paciente</h4>
+
+                <form [formGroup]="formulario" (ngSubmit)="crearPaciente( formulario.value )"  class="form p-t-20">
+                    <div class="form-group">
+                        <label for="exampleInputuname">Nombre</label>
+                        <div class="input-group">
+                            <input formControlName="nombre" name="nombre" type="text" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputuname">Apellidos</label>
+                        <div class="input-group">
+                            <input formControlName="apellidos" name="apellidos" type="text" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputuname">SIP</label>
+                        <div class="input-group">
+                            <input formControlName="sip" name="sip" type="number" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputuname">Fecha de nacimiento</label>
+                        <div class="input-group">
+                            <input formControlName="fecha_nac" name="fecha_nac" type="date"  class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputuname">Sexo</label>
+                        <div class="input-group">
+                            <select formControlName="sexo" name="sexo" type="text" class="form-control" required>
+                                <option> Masculino </option>
+                                <option> Femenino </option>
+                                <option> Indefinido </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputuname">Clase económica</label>
+                        <div class="input-group">
+                            <select formControlName="clase_econom" name="clase_econom" type="text" class="form-control" required>
+                                <option> BAJA </option>
+                                <option> MEDIA </option>
+                                <option> ALTA </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputuname">Médico asignado</label>
+                        <div class="input-group">
+                            <select formControlName="medico" name="medico" type="text" class="form-control" required>
+                                <option *ngFor="let medico of medicos" [ngValue]="medico">{{medico.apellidos}}, {{medico.nombre}}</option>
+                            </select>   
+                        </div>
+                    </div>
+
+                    <div class="text-right">
+                        <button type="submit" class="btn btn-success waves-effect waves-light m-r-10"> Crear paciente </button>
+                    </div>
+
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,80 @@
+<div class="row fadeIn">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                    
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Ciudad</th>
+                            <th>Teléfono</th>
+                            <th>Sitio web</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>{{hospital.nombre}}</td>
+                            <td>{{hospital.ciudad}}</td>
+                            <td>{{hospital.telefono}}</td>
+                            <td>{{hospital.url}}</td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+
+                <h4>Médicos asociados</h4>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellidos</th>
+                            <th>Correo</th>
+                            <th>Sexo</th>
+                            <th>Teléfono</th>
+                            <th>Servicio Unidad</th>
+                            <th>Nº colegiado</th>
+                            <th>Centro hospitalario</th>
+                            <th>Permisos</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr *ngFor="let medico of medicos" [routerLink]="['/medicos', medico.id]" class="pointer">
+                            <td>{{medico.nombre}}</td>
+                            <td>{{medico.apellidos}}</td>
+                            <td>{{medico.telefono}}</td>
+                            <td>{{medico.sexo}}</td>
+                            <td>{{medico.telefono}}</td>
+                            <td>{{medico.servicio_unidad}}</td>
+                            <td>{{medico.num_colegiado}}</td>
+                            <td>{{medico.centro}}</td>
+                            <td>{{medico.rol}}</td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+                <!-- <div class="text-left">
+                    <button type="button" (click)="activarFormulario()" class="btn waves-effect waves-light m-r-10 btn-success">
+                        <i class="fa fa-plus"> Nuevo hospital </i>
+                    </button>
+                </div> -->
+                
+
+            </div>
+        </div>
+    </div>
+</div>

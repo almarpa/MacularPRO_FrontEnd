@@ -1,0 +1,141 @@
+<div class="row fadeIn">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                    
+                <div class="text-right">
+                    <button type="button" (click)="activarFormulario()" class="btn waves-effect waves-light m-r-10 btn-success">
+                        <i class="fa fa-plus"> </i> Nuevo antecedente
+                    </button>
+                </div>
+
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nº</th>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Resultado</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr *ngFor="let antecedente of antecedentes; let i= index" >
+                            <td> {{i+1}} </td>
+                            <td>{{antecedente.nombre}}</td>
+                            <td>{{antecedente.descripcion}}</td>
+                            <td>{{antecedente.resultado ? 'SÍ' : 'NO' }}</td>
+                            <td>
+                                <button class="btn btn-info m-r-10" style="margin:5px;" (click)="activarFormulario2();cargarAntecedente(antecedente.id,i+1)">
+                                    <i class="fa fa-pencil"></i>
+                                </button>
+                                <button class="btn btn-danger m-r-10" style="margin:5px;" (click)="borrarAntecedente(antecedente)">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" [hidden]="!control">
+    <div class="col-9">
+        <div class="card">
+            <div class="card-body">
+                
+                <h4>Datos del nuevo antecedente médico</h4>
+
+                <form [formGroup]="formulario" (ngSubmit)="anadirAntecedente( formulario.value )" class="form p-t-20">
+        
+                    <div class="form-group">
+                        <label for="exampleInputuname">Nombre</label>
+                        <div class="input-group">
+                            <select formControlName="nombre" name="nombre" class="form-control">
+                                <option >Hipertensión arterial</option>
+                                <option >Dislipemia</option>
+                                <option >Fumador</option>
+                                <option >Diabetes</option>
+                                <option >Enfermedades reumatológicas</option>
+                                <option >Otras enfermedades</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputuname">Descripción</label>
+                        <div class="input-group">
+                            <textarea formControlName="descripcion" name="descripcion" type="text" cols="40" rows="5" class="form-control" required></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputuname">Resultado</label>
+                        <div class="input-group">
+                            <select formControlName="resultado" name="resultado" class="form-control">
+                                <option value="1">SÍ</option>
+                                <option value="0">NO</option>
+                            </select>                        
+                        </div>
+                    </div>
+
+                    <div class="text-right">
+                        <button type="submit" class="btn btn-success waves-effect waves-light m-r-10"> Añadir </button>
+                    </div>
+
+                </form>
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row" [hidden]=!control2>
+    <div class="col-9" >
+        <div class="card">
+            <div class="card-body">
+                <h4>Editar antecedente médico {{ numeroCol }}</h4>
+
+                <form ngNativeValidate #f="ngForm" (ngSubmit)="editarAntecedente( f.value )" class="form p-t-20">
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <div class="input-group">
+                            <select [ngModel]="antecedente.nombre" name="nombre" type="text" class="form-control" required>
+                                <option >Hipertensión arterial</option>
+                                <option >Dislipemia</option>
+                                <option >Fumador</option>
+                                <option >Diabetes</option>
+                                <option >Enfermedades reumatológicas</option>
+                                <option >Otras enfermedades</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Descripción</label>
+                        <div class="input-group">
+                            <input [ngModel]="antecedente.descripcion" name="descripcion" type="text" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Resultado</label>
+                        <div class="input-group">
+                            <select [ngModel]="antecedente.resultado" name="resultado" type="text" class="form-control" required >
+                                    <option value="1">SÍ</option>
+                                    <option value="0">NO</option>
+                            </select> 
+                        </div>
+                    </div>
+                    
+                    <div class="text-right">
+                        <button type="submit" class="btn btn-success waves-effect waves-light m-r-10"> Guardar </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
