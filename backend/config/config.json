@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "AlexMarco12",
+    "password": "@lexM@rco12",
     "database": "gmac_db",
     "host": "localhost",
     "dialect": "mysql"
