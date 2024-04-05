@@ -3,4 +3,4 @@ Development of a medical Web application to analize and manage patient informati
 Presented as end-of-Master's project with the colaboration of the Information Systems and Computing Department (DSIC) at Polytechnic University of Valencia (UPV).
 
 ![a](https://github.com/almarpa/MacularPRO_FrontEnd/assets/38918727/9574900d-c800-4575-b3ef-629b985b2067)
-![c](https://github.com/almarpa/MacularPRO_FrontEnd/assets/38918727/be91749f-9b05-4ddf-8bfd-1f2b38dcb22f)
+![v](https://github.com/almarpa/MacularPRO_FrontEnd/assets/38918727/d0be5ebb-aaa1-4fb0-a024-3d7923e1f65a)
